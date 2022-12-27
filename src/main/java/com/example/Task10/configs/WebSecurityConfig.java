@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.configs;
+package com.example.Task10.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
