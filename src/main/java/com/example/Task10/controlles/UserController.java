@@ -4,12 +4,13 @@ package com.example.Task10.controlles;
 
 import com.example.Task10.models.User;
 import com.example.Task10.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public String addUserToBD(@ModelAttribute("user") @Valid User user,BindingResult bindingResult){
+    public String addUserToBD(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
         if(bindingResult.hasErrors()) return "add";
         userService.save(user);
         return "redirect:/";
