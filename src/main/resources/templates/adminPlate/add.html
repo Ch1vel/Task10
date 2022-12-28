@@ -9,25 +9,28 @@
 Add new User please!
 <br>
 <br>
-<form th:method="POST" th:action="@{/}" th:object="${user}">
-    <label th:name="nickname">Nickname</label>
+<form th:method="POST" th:action="@{/registry}" th:object="${user}">
+    <label th:name="nickname">Enter your Nickname</label>
     <input type="text" th:field="*{nickname}" id="nickname"/>
     <b style="color:red" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">Nickname error</b>
     <br>
-    <label th:name="name">Name</label>
+    <label th:name="name">Enter your Name</label>
     <input type="text" th:field="*{name}" id="name"/>
     <b style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</b>
     <br>
-    <label th:name="surname">Surname</label>
+    <label th:name="surname">Enter your Surname</label>
     <input type="text" th:field="*{surname}" id="surname"/>
     <b style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</b>
     <br>
-    <label th:name="email">Email</label>
+    <label th:name="email">Enter your Email</label>
     <input type="text" th:field="*{email}" id="email"/>
     <b style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</b>
     <br>
+    <label th:name="password">Enter your Password</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <b style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</b>
     <br>
-    <input type="submit" value="Add New User!"/>
+    <input type="submit" value="Registration!"/>
 </form>
 
 </body>

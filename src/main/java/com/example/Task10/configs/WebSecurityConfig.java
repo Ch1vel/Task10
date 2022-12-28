@@ -28,15 +28,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/", "/login","/registry","error").permitAll()
+                .anyRequest().hasRole("USER")
                 .and()
-                .formLogin().successHandler(successUserHandler)
-                .permitAll()
+                .formLogin().loginPage("/login")
+                .loginProcessingUrl("process_login")
+                .defaultSuccessUrl("/user",true)
+                .failureUrl("/login")
                 .and()
                 .logout()
-                .permitAll();
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/");
+
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,18 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // аутентификация inMemory
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("user")
-                        .roles("USER")
-                        .build();
 
-        return new InMemoryUserDetailsManager(user);
-    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
