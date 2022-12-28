@@ -1,13 +1,15 @@
 package com.example.Task10.controlles;
 
+import com.example.Task10.models.User;
 import com.example.Task10.repositories.UserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 
-@Controller("/user")
+@Controller
+@RequestMapping("/user")
 public class UserController {
     private final UserRepository userRepository;
 
@@ -15,9 +17,9 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user",userRepository.findById(id).get());
+    @GetMapping
+    public String show(Authentication authentication,Model model) {
+        model.addAttribute("user",userRepository.findByNickname(authentication.getName()).get());
         return "userPlate/showUser";
     }
 }

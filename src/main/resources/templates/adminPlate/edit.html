@@ -9,7 +9,7 @@
 Edit User please!
 <br>
 <br>
-<form th:method="POST" th:action="@{/registry}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/users}" th:object="${user}">
   <label th:name="nickname">Enter your Nickname</label>
   <input type="text" th:field="*{nickname}" id="nickname"/>
   <b style="color:red" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">Nickname error</b>
@@ -30,8 +30,11 @@ Edit User please!
   <input type="password" th:field="*{password}" id="password"/>
   <b style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</b>
   <br>
-  <input type="submit" value="Registration!"/>
+  <input type="submit" value="Edit!"/>
 </form>
-
+<br>
+<br>
+<br>
+<a href="/logout">LOGOUT</a>
 </body>
 </html>

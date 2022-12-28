@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RegistrationService {
 
@@ -17,9 +19,13 @@ public class RegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registration(User user) {
+    public boolean registration(User user) {
+        Optional<User> userFromDB = userRepository.findByNickname(user.getNickname());
+        if (userFromDB.isPresent()) return false;
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
         userRepository.save(user);
+        return true;
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-@Configuration
+
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
@@ -30,13 +30,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/user").hasAnyRole("ADMIN","USER")
                 .antMatchers("/", "/login","/registry","error").permitAll()
-                .anyRequest().hasRole("USER")
+                .anyRequest().hasRole("ADMIN")
                 .and()
                 .formLogin().loginPage("/login")
-                .loginProcessingUrl("process_login")
-                .defaultSuccessUrl("/user",true)
-                .failureUrl("/login")
+                .loginProcessingUrl("/login")
+                .successHandler(successUserHandler).permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 
     // аутентификация inMemory

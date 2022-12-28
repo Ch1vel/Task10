@@ -23,9 +23,9 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String welcomePage() {
-        return "welcomePage";
+        return "adminPlate/welcomePage";
     }
 
     @GetMapping("/add")
@@ -33,11 +33,11 @@ public class AdminController {
         return "adminPlate/add";
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String addUserToBD(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
         if(bindingResult.hasErrors()) return "adminPlate/add";
         userService.save(user);
-        return "redirect:/";
+        return "redirect:";
     }
 
     @GetMapping("/users")
@@ -60,7 +60,7 @@ public class AdminController {
 
     @PatchMapping("/users/{id}")
     public String editUser(@ModelAttribute("user")  @Valid User user,BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) return "add";
+        if(bindingResult.hasErrors()) return "adminPlate/edit";
         userService.editUser(user);
         return "redirect:/users";
     }
