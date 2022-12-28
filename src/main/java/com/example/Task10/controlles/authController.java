@@ -25,10 +25,6 @@ public class authController {
     public String startPage() {
         return "start";
     }
-    @GetMapping("/login")
-    public String login() {
-        return "authPlate/login";
-    }
 
     @GetMapping("/registry")
     public String registry(@ModelAttribute("user") User user) {
