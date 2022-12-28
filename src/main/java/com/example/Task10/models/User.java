@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table
@@ -36,6 +37,13 @@ public class User {
     @NotEmpty(message = "email should not be empty")
     @Email(message = "email should be valid")
     private String email;
+    @Column
+    @NotEmpty
+    private String password;
+    @Column
+    private String role;
+
+
 
     public User() {
     }
@@ -85,5 +93,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

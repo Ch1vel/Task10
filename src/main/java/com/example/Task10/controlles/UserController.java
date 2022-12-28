@@ -1,67 +1,23 @@
 package com.example.Task10.controlles;
 
-
-
-import com.example.Task10.models.User;
-import com.example.Task10.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.Task10.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
-@Controller
+@Controller("/user")
 public class UserController {
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    @GetMapping("/")
-    public String welcomePage() {
-        return "welcomePage";
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user",userRepository.findById(id).get());
+        return "userPlate/showUser";
     }
-
-    @GetMapping("/add")
-    public String add(@ModelAttribute("user") User user){
-        return "add";
-    }
-
-    @PostMapping("/")
-    public String addUserToBD(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) return "add";
-        userService.save(user);
-        return "redirect:/";
-    }
-
-    @GetMapping("/users")
-    public String showUserList(Model model) {
-        model.addAttribute("list",userService.getAllUser());
-        return "listOfUsers";
-    }
-
-    @DeleteMapping("/users/{id}/delete")
-    public String deleteUser(@PathVariable("id") int id) {
-        userService.removeUser(id);
-        return "redirect:/users";
-    }
-
-    @GetMapping("/users/{id}/edit")
-    public String editUser(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user",userService.findUser(id));
-        return "edit";
-    }
-
-    @PatchMapping("/users/{id}")
-    public String editUser(@ModelAttribute("user")  @Valid User user,BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) return "add";
-        userService.editUser(user);
-        return "redirect:/users";
-    }
-
 }
