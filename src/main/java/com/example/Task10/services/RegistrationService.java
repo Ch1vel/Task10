@@ -6,11 +6,12 @@ import com.example.Task10.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-public class RegistrationService {
+public class RegistrationService implements RegistrationServiceInterface{
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -21,7 +22,7 @@ public class RegistrationService {
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
     }
-
+    @Transactional
     public boolean registration(User user) {
         Optional<User> userFromDB = userRepository.findByNickname(user.getNickname());
         if (userFromDB.isPresent()) return false;

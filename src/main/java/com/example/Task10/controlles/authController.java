@@ -2,7 +2,6 @@ package com.example.Task10.controlles;
 
 import com.example.Task10.models.User;
 import com.example.Task10.services.RegistrationService;
-import com.example.Task10.services.RoleService;
 import com.example.Task10.util.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

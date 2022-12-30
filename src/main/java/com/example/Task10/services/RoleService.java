@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class RoleService {
+public class RoleService implements RoleServiceInterface {
     private final RoleRepository roleRepository;
     @Autowired
     public RoleService(RoleRepository roleRepository) {
