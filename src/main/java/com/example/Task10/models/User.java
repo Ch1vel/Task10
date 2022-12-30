@@ -1,15 +1,13 @@
 package com.example.Task10.models;
 
-
-
-
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table
@@ -41,19 +39,28 @@ public class User {
     @Column
     @NotEmpty
     private String password;
-    @Column
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+                joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles = new ArrayList<>();
 
 
 
     public User() {
     }
 
-    public User(String name, String surname, String nickname, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.nickname = nickname;
-        this.email = email;
+
+    public void add(Role role) {
+        this.roles.add(role);
+    }
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> role) {
+        this.roles = role;
     }
 
     public int getId() {
@@ -104,11 +111,5 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

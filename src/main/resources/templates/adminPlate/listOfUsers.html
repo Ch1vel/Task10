@@ -14,7 +14,10 @@ All Users
     <b th:text="${user.getName()}">value</b>
     <b th:text="${user.getSurname()}">value</b>
     <b th:text="${user.getEmail()}">value</b>
-        <form th:method="DELETE" th:action="@{admin/users/{id}/delete(id=${user.getId()})}">
+    <b th:each="role :${user.getRoles()}">
+        <b th:text="${role.getAuthority()}">value</b>
+    </b>
+        <form th:method="DELETE" th:action="@{/admin/users/{id}/delete(id=${user.getId()})}">
         <input type="submit" value="Delete user"/></form>
         <a th:href="@{/admin/users/{id}/edit(id=${user.getId()})}">Edit User</a>
         <br>

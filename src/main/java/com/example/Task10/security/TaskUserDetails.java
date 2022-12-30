@@ -1,13 +1,13 @@
 package com.example.Task10.security;
 
+
 import com.example.Task10.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 public class TaskUserDetails implements UserDetails {
 
@@ -19,7 +19,7 @@ public class TaskUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
+        return user.getRoles().stream().map(y ->  new SimpleGrantedAuthority(y.getAuthority())).toList();
     }
 
     @Override

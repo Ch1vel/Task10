@@ -30,6 +30,11 @@ Add new User please!
     <input type="password" th:field="*{password}" id="password"/>
     <b style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</b>
     <br>
+    <b th:each="x : ${role}">
+        <input type="checkbox" name="role" th:value="${x.getId()}"/>
+        <label th:text="${x.getAuthority()}">value</label>
+    </b>
+
     <input type="submit" value="Registration!"/>
 </form>
 <br>
